@@ -3,6 +3,7 @@ package cloudfoundry
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -228,7 +229,7 @@ func resourceServiceInstanceDelete(d *schema.ResourceData, meta interface{}) err
 	}
 	// Wait, catching any errors
 	if _, err = stateConf.WaitForState(); err != nil {
-		return err
+		log.Printf("[WARN] Couldn't delete instance %s, got error %s\n", id, err)
 	}
 
 	return nil
